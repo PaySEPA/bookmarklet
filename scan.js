@@ -56,6 +56,10 @@ function scanHtml() {
     video.width = 320;
     video.height = 240;
     
+    var button = document.createElement('button');
+    button.id = 'capture';
+    button.innerHTML = 'Scan';
+    
     var canvas = document.createElement('canvas');
     canvas.id = 'qr-canvas';
     canvas.width = 320;
