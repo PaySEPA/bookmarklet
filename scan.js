@@ -26,7 +26,7 @@ scan.src = 'https://paysepa.github.io/bookmarklet/scan.js';
 head.appendChild(scan);
 */
 
-function scan() {
+function scanHtml() {
     /*
     <h2 id="header"><i class="icon-qrcode"></i> PaySEPA</h2>
     <p id="info" class="hidden">Allow access to your webcam to scan SEPA payment codes.</p>
@@ -77,6 +77,8 @@ function add(name) {
     head.appendChild(scan);
 }
 
+scanHtml();
+
 add('grid');
 add('version');
 add('detector');
@@ -96,5 +98,4 @@ add('alignpat');
 add('databr');
 add('main');
 
-scan();
-SEPACodeScanner.init();
+
