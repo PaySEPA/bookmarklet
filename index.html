@@ -1,1 +1,12 @@
-<h1>PaySEPA bookmarklet</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PaySEPA</title>
+</head>
+
+<body>
+    <h1>PaySEPA bookmarklet for online banking</h1>
+    <code>javascript:(function()%7Bvar%20iframe%20%3D%20document.createElement('iframe')%3Biframe.src%20%3D%20'https%3A%2F%2FPaySEPA.github.io%2Fbookmarklet%2Fscan.html'%3Biframe.id%20%3D%20'scanner-frame'%3Biframe.width%20%3D%20350%3Biframe.height%20%3D%20290%3Bvar%20provider_url%20%3D%20parent.document.location.href%3Bif%20(provider_url.indexOf('portal.raiffeisen.at')%20%3E%201)%20%7Bel%20%3D%20document.getElementById('j_id1_zv_WAR_zvportlet_INSTANCE_4NsO_%3Aj_id4')%3B%7D%20else%20if%20(provider_url.indexOf('banking.co.at')%20%3E%201)%20%7Bel%20%3D%20document.getElementById('inputAuftrag')%3B%7D%20else%20%7Bel%20%3D%20document.body%3B%7Del.appendChild(iframe)%7D)()<code>
+</body>
+</html>

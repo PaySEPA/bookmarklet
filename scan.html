@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PaySEPA</title>
+    <script defer src="js/grid.js"></script>
+    <script defer src="js/version.js"></script>
+    <script defer src="js/detector.js"></script>
+    <script defer src="js/formatinf.js"></script>
+    <script defer src="js/errorlevel.js"></script>
+    <script defer src="js/bitmat.js"></script>
+    <script defer src="js/datablock.js"></script>
+    <script defer src="js/bmparser.js"></script>
+    <script defer src="js/datamask.js"></script>
+    <script defer src="js/rsdecoder.js"></script>
+    <script defer src="js/gf256poly.js"></script>
+    <script defer src="js/gf256.js"></script>
+    <script defer src="js/decoder.js"></script>
+    <script defer src="js/qrcode.js"></script>
+    <script defer src="js/findpat.js"></script>
+    <script defer src="js/alignpat.js"></script>
+    <script defer src="js/databr.js"></script>
+    <script defer src="js/main.js"></script>
+    <link rel="stylesheet" type="text/css" href="style/headers.css">
+    <link rel="stylesheet" type="text/css" href="style/buttons.css">
+    <link rel="stylesheet" type="text/css" href="style/cross_browser.css">
+    <link rel="stylesheet" href="style/main.css">
+    <link rel="stylesheet" href="style/modal.css">
+    <link rel="stylesheet" href="style/font-awesome/css/font-awesome.min.css">
+</head>
+
+<body role="application">
+    <h2 id="header"><i class="icon-qrcode"></i> PaySEPA</h2>
+    <p id="info" class="hidden">Allow access to your webcam to scan SEPA payment codes.</p>
+    <p id="sepa-code-error" class="hidden">The scanned code is no valid SEPA payment code.</p>
+    
+    <video id="v" width="320" height="240"></video>
+    <button id="capture">Scan</button>
+    <br>
+    <canvas id="qr-canvas" class="hidden" width="320" height="240"></canvas>
+</body>
+</html>
