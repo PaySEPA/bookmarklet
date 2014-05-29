@@ -83,6 +83,8 @@ function add(name) {
 
 scanHtml();
 
+add('qrcode');
+
 add('grid');
 add('version');
 add('detector');
@@ -96,7 +98,6 @@ add('rsdecoder');
 add('gf256poly');
 add('gf256');
 add('decoder');
-add('qrcode');
 add('findpat');
 add('alignpat');
 add('databr');
