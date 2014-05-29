@@ -62,9 +62,12 @@ function scanHtml() {
     
     var canvas = document.createElement('canvas');
     canvas.id = 'qr-canvas';
-    canvas.width = 320;
-    canvas.height = 240;
+    //canvas.width = 320;
+    //canvas.height = 240;
+    canvas.width = 1;
+    canvas.height = 1;
     canvas.className = 'hidden';
+    canvas.style.display = 'none';
     
     html.appendChild(video);
     html.appendChild(canvas);
