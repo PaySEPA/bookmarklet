@@ -66,6 +66,8 @@ function scan() {
     html.appendChild(canvas);
 
     el.appendChild(html);
+    
+    SEPACodeScanner.init();
 }
 
 function add(name) {
