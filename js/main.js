@@ -89,9 +89,10 @@ var SEPACodeScanner = {
             document.getElementById(f_reference).value = lines[9];
 
             // resize scanner iframe on success
-            var i = parent.document.getElementById('scanner-frame');
-            i.width = 100;
-            i.height = 30;
+            var i = document.getElementById('sepa-scanner');
+            i.style.display = 'none';
+            // i.width = 100;
+            // i.height = 30;
 
             // stop updating data
             // TODO also stop the webcam
