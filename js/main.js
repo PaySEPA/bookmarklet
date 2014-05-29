@@ -239,7 +239,9 @@ var SEPACodeScanner = {
     }
 };
 
-window.addEventListener('load', function onload_scanner() {
+SEPACodeScanner.init();
+
+/*window.addEventListener('load', function onload_scanner() {
     window.removeEventListener('load', onload_scanner);
     SEPACodeScanner.init();
-});
+});*/
