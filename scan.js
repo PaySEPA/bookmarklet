@@ -43,7 +43,7 @@ function scanHtml() {
     if (provider_url.indexOf('portal.raiffeisen.at') > 1) {
         el = document.getElementById('j_id1_zv_WAR_zvportlet_INSTANCE_4NsO_:j_id4');
     } else if (provider_url.indexOf('banking.co.at') > 1) {
-        el = document.getElementById('sbtnBrowserWorkAround');
+        el = document.getElementById('pageheader');
     } else {
         el = document.body;
     }
