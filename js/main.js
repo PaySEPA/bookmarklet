@@ -82,11 +82,11 @@ var SEPACodeScanner = {
                     // also available
                     // usage[1-4], origId, caldate
             }
-            parent.document.getElementById(f_iban).value = lines[6];
-            parent.document.getElementById(f_bic).value = lines[4];
-            parent.document.getElementById(f_name).value = lines[5];
-            parent.document.getElementById(f_amount).value = lines[7];
-            parent.document.getElementById(f_reference).value = lines[9];
+            document.getElementById(f_iban).value = lines[6];
+            document.getElementById(f_bic).value = lines[4];
+            document.getElementById(f_name).value = lines[5];
+            document.getElementById(f_amount).value = lines[7];
+            document.getElementById(f_reference).value = lines[9];
 
             // resize scanner iframe on success
             var i = parent.document.getElementById('scanner-frame');
