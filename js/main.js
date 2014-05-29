@@ -168,7 +168,7 @@ var SEPACodeScanner = {
             }
         }, false);
 
-        this.capture.style.display = 'none';
+        // this.capture.style.display = 'none';
 
         this.video.addEventListener('play', function () {
             //It should repeatly capture till a qrcode is successfully captured.
@@ -225,16 +225,16 @@ var SEPACodeScanner = {
 
         if(qrcode.decode()) {
             // Stop automatic capture.
-            this.capture.style.display = 'block';
+            // this.capture.style.display = 'block';
             this.video.pause();
 
             var self = this;
             // Restart video capturing.
-            this.capture.addEventListener('click', function () {
+            /* this.capture.addEventListener('click', function () {
                 document.getElementById('message').innerHTML = "";
                 self.capture.style.display = 'none';
                 self.video.play();
-            }, false);
+            }, false); */
         }
     }
 };
