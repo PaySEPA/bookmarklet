@@ -82,31 +82,33 @@ function scanHtml() {
         }
     }
 
-    var html = document.createElement('div');
-    html.id = 'sepa-scanner';
+    if (!document.getElementById('sepa-scanner')) {
+        var html = document.createElement('div');
+        html.id = 'sepa-scanner';
 
-    var video = document.createElement('video');
-    video.id = 'v';
-    video.width = 320;
-    video.height = 240;
+        var video = document.createElement('video');
+        video.id = 'v';
+        video.width = 320;
+        video.height = 240;
 
-    var button = document.createElement('button');
-    button.id = 'capture';
-    button.innerHTML = 'Scan';
+        var button = document.createElement('button');
+        button.id = 'capture';
+        button.innerHTML = 'Scan';
 
-    var canvas = document.createElement('canvas');
-    canvas.id = 'qr-canvas';
-    //canvas.width = 320;
-    //canvas.height = 240;
-    canvas.width = 1;
-    canvas.height = 1;
-    canvas.className = 'hidden';
-    canvas.style.display = 'none';
+        var canvas = document.createElement('canvas');
+        canvas.id = 'qr-canvas';
+        //canvas.width = 320;
+        //canvas.height = 240;
+        canvas.width = 1;
+        canvas.height = 1;
+        canvas.className = 'hidden';
+        canvas.style.display = 'none';
 
-    html.appendChild(video);
-    html.appendChild(canvas);
+        html.appendChild(video);
+        html.appendChild(canvas);
 
-    el.appendChild(html);
+        el.appendChild(html);
+    }
 }
 
 function add(name) {
