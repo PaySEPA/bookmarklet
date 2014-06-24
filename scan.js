@@ -139,3 +139,4 @@ add('findpat');
 add('alignpat');
 add('databr');
 add('main');
+add('iban');

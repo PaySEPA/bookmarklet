@@ -62,6 +62,11 @@ var SEPACodeScanner = {
                 // check for right format (0,00 vs 0.00)
                 // console.log('** amount', lines[7]);
             }
+            
+            if (lines[6]) {
+                // use print format for all right now
+                lines[6] = IBAN.printFormat(lines[6]);
+            }
 
             // form input IDs @ ELBA
             if (provider == 'raika') {
