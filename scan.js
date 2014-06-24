@@ -141,7 +141,7 @@ add('databr');
 add('main');
 add('iban');
 
-if (!jQuery) {
+if (!window.jQuery) {
     add('jquery');
     console.log('added jquery');
 }
