@@ -26,6 +26,8 @@ scan.src = 'https://paysepa.github.io/bookmarklet/scan.js';
 head.appendChild(scan);
 */
 
+var scanner = document.getElementById('sepa-scanner');
+
 function scanHtml() {
     /*
     <h2 id="header"><i class="icon-qrcode"></i> PaySEPA</h2>
@@ -82,7 +84,6 @@ function scanHtml() {
         }
     }
 
-    var scanner = document.getElementById('sepa-scanner');
     if (scanner) {
         scanner.style.display = 'block';
     } else {
@@ -125,28 +126,28 @@ function add(name) {
 
 scanHtml();
 
-add('qrcode');
-
-add('grid');
-add('version');
-add('detector');
-add('formatinf');
-add('errorlevel');
-add('bitmat');
-add('datablock');
-add('bmparser');
-add('datamask');
-add('rsdecoder');
-add('gf256poly');
-add('gf256');
-add('decoder');
-add('findpat');
-add('alignpat');
-add('databr');
-add('main');
-add('iban');
+if (!scanner) {
+    add('qrcode');
+    add('grid');
+    add('version');
+    add('detector');
+    add('formatinf');
+    add('errorlevel');
+    add('bitmat');
+    add('datablock');
+    add('bmparser');
+    add('datamask');
+    add('rsdecoder');
+    add('gf256poly');
+    add('gf256');
+    add('decoder');
+    add('findpat');
+    add('alignpat');
+    add('databr');
+    add('main');
+    add('iban');
+}
 
 if (!window.jQuery) {
     add('jquery');
-    console.log('added jquery');
 }
