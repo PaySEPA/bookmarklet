@@ -113,6 +113,10 @@ var SEPACodeScanner = {
             }
 
 
+            document.getElementById(f_name).value = lines[5];
+            document.getElementById(f_amount).value = lines[7];
+            document.getElementById(f_reference).value = lines[9];
+
             iban = document.getElementById(f_iban);
             iban.value = lines[6];
             // iban.blur();
@@ -125,11 +129,8 @@ var SEPACodeScanner = {
             press.which = 13;
             big.trigger( press );
             //bic.blur();
-            bic.select();
+            //bic.select();
             
-            document.getElementById(f_name).value = lines[5];
-            document.getElementById(f_amount).value = lines[7];
-            document.getElementById(f_reference).value = lines[9];
 
             // resize scanner iframe on success
             var i = document.getElementById('sepa-scanner');
