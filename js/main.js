@@ -18,7 +18,8 @@ var SEPACodeScanner = {
 
         var lines = [],
             provider = null,
-            provider_url = parent.document.location.href;
+            provider_url = parent.document.location.href,
+            iFrame = null;
 
         if (success) {
             return false;
@@ -31,6 +32,8 @@ var SEPACodeScanner = {
             provider = 'raika'; // ELBA Raiffeisen
         } else if (provider_url.indexOf('banking.co.at') > 1) {
             provider = 'hypo'; // HYPO NOE
+        } else if (provider_url.indexOf('bankaustria.at') > 1) {
+            provider = 'ba'; // Bank Austria Uni Credit
         }
 
         // dev stuff
@@ -71,6 +74,7 @@ var SEPACodeScanner = {
                     // also available
                     // empfaenger_anschrift, verwendungszweck_zeile[1-4], auftraggeberreferenz, durchfuehrungsdatum
             }
+            
             // form input IDs @ HYPO
             if (provider == 'hypo') {
                 var f_iban = 'ntfempfkto',
@@ -82,6 +86,28 @@ var SEPACodeScanner = {
                     // also available
                     // usage[1-4], origId, caldate
             }
+            
+            // form input IDs @ BA
+            if (provider == 'ba') {
+                var f_iban = 'generalForm:f06_benefAccountNumbersubviewEditRend:j_id180:j_id182:f06_benefAccountNumber',
+                    f_bic = 'generalForm:f07_benefBankCodesubviewEditRend:j_id196:j_id198:f07_benefBankCode',
+                    f_name = 'generalForm:f04_benefName1subviewEditRend:j_id148:j_id150:f04_benefName1',
+                    f_amount = 'generalForm:f09_operationAmountsubviewEditRend:editMode:valueChangeEvent:existId:f09_operationAmount',
+                    f_reference = 'generalForm:f08_customerDatasubviewEditRend:j_id219:j_id221:f08_customerData';
+                
+                // not working
+                iFrame = window.frames['appFrameUnico'];
+                iFrame.document.getElementById(f_iban).value = lines[6];
+                iFrame.document.getElementById(f_bic).value = lines[4];
+                iFrame.document.getElementById(f_name).value = lines[5];
+                iFrame.document.getElementById(f_amount).value = lines[7];
+                iFrame.document.getElementById(f_reference).value = lines[9];
+                
+                // also available
+                // ...
+            }
+            
+            
             document.getElementById(f_iban).value = lines[6];
             document.getElementById(f_bic).value = lines[4];
             document.getElementById(f_name).value = lines[5];

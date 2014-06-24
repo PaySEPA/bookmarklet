@@ -38,16 +38,47 @@ function scanHtml() {
     <canvas id="qr-canvas" class="hidden" width="320" height="240"></canvas>
     */
     
-    var provider_url = document.location.href;
+    var provider_url = document.location.href,
+        el = null,
+        supported = null,
+        provider = null,
+        url = null;
 
     if (provider_url.indexOf('portal.raiffeisen.at') > 1) {
         el = document.getElementById('j_id1_zv_WAR_zvportlet_INSTANCE_4NsO_:j_id4');
+        supported = true;
+        provider = 'raika'; // ELBA Raiffeisen
+        url = 'https://portal.raiffeisen.at/resolveLink?serviceName=izv';
+        
     } else if (provider_url.indexOf('banking.co.at') > 1) {
         el = document.getElementById('pageheader');
+        supported = true;
+        provider = 'hypo'; // HYPO NOE
+        url = 'https://www.banking.co.at/appl/ebp/trans/initeingabegiro.html';
+        
+    } else if (provider_url.indexOf('bankaustria.at') > 1) {
+        el = document.getElementsByClassName('wpt_wcm_content_link_container')[0];
+        supported = true;
+        provider = 'ba'; // Bank Austria / Uni Credit
+
     } else {
-        el = document.body;
+        // el = document.body;
     }
-    
+
+    if (!supported) {
+        alert('Your online banking system is currently not supported.');
+        return false;
+    }
+
+    if (!el) {
+        alert('Could not attach ScanSEPA - navigate to the transfer form page first.');
+        if (url) {
+            window.navigate(url);
+        }
+        
+        return false;
+    }
+
     var html = document.createElement('div');
     html.id = 'sepa-scanner';
     
@@ -105,5 +136,3 @@ add('findpat');
 add('alignpat');
 add('databr');
 add('main');
-
-
