@@ -120,11 +120,11 @@ var SEPACodeScanner = {
             bic = document.getElementById(f_bic);
             bic.value = lines[4];
             
-            bic.focus();
+            //bic.focus();
             var press = jQuery.Event("keyup");
             press.which = 13;
             big.trigger( press );
-            bic.blur();
+            //bic.blur();
             
             document.getElementById(f_name).value = lines[5];
             document.getElementById(f_amount).value = lines[7];
