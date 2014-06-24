@@ -28,7 +28,7 @@ var SEPACodeScanner = {
         txt.replace(/\r\n/g, '\n');
         lines = txt.split('\n');
 
-        if (provider_url.indexOf('portal.raiffeisen.at') > 1) {
+        if (provider_url.indexOf('raiffeisen.at') > 1) {
             provider = 'raika'; // ELBA Raiffeisen
         } else if (provider_url.indexOf('banking.co.at') > 1) {
             provider = 'hypo'; // HYPO NOE
@@ -58,11 +58,11 @@ var SEPACodeScanner = {
                 if (lines[7].indexOf(',') < 1) {
                     lines[7] = lines[7] + ',00';
                 }
-                
+
                 // check for right format (0,00 vs 0.00)
                 // console.log('** amount', lines[7]);
             }
-            
+
             // form input IDs @ ELBA
             if (provider == 'raika') {
                 var f_iban = 'j_id1_zv_WAR_zvportlet_INSTANCE_4NsO_:auftrag:empfaenger_IbanUndKontonummer',
@@ -70,11 +70,11 @@ var SEPACodeScanner = {
                     f_name = 'j_id1_zv_WAR_zvportlet_INSTANCE_4NsO_:auftrag:empfaenger_name',
                     f_amount = 'j_id1_zv_WAR_zvportlet_INSTANCE_4NsO_:auftrag:betrag',
                     f_reference = 'j_id1_zv_WAR_zvportlet_INSTANCE_4NsO_:auftrag:zahlungsreferenz';
-                    
+
                     // also available
                     // empfaenger_anschrift, verwendungszweck_zeile[1-4], auftraggeberreferenz, durchfuehrungsdatum
             }
-            
+
             // form input IDs @ HYPO
             if (provider == 'hypo') {
                 var f_iban = 'ntfempfkto',
@@ -82,11 +82,11 @@ var SEPACodeScanner = {
                     f_name = 'recname',
                     f_amount = 'amount',
                     f_reference = 'ntfzahlungsreferenz';
-                    
+
                     // also available
                     // usage[1-4], origId, caldate
             }
-            
+
             // form input IDs @ BA
             if (provider == 'ba') {
                 var f_iban = 'generalForm:f06_benefAccountNumbersubviewEditRend:j_id180:j_id182:f06_benefAccountNumber',
@@ -94,7 +94,7 @@ var SEPACodeScanner = {
                     f_name = 'generalForm:f04_benefName1subviewEditRend:j_id148:j_id150:f04_benefName1',
                     f_amount = 'generalForm:f09_operationAmountsubviewEditRend:editMode:valueChangeEvent:existId:f09_operationAmount',
                     f_reference = 'generalForm:f08_customerDatasubviewEditRend:j_id219:j_id221:f08_customerData';
-                
+
                 // not working
                 iFrame = window.frames['appFrameUnico'];
                 iFrame.document.getElementById(f_iban).value = lines[6];
@@ -102,12 +102,12 @@ var SEPACodeScanner = {
                 iFrame.document.getElementById(f_name).value = lines[5];
                 iFrame.document.getElementById(f_amount).value = lines[7];
                 iFrame.document.getElementById(f_reference).value = lines[9];
-                
+
                 // also available
                 // ...
             }
-            
-            
+
+
             document.getElementById(f_iban).value = lines[6];
             document.getElementById(f_bic).value = lines[4];
             document.getElementById(f_name).value = lines[5];
