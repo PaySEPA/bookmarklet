@@ -56,7 +56,7 @@ function scanHtml() {
         provider = 'hypo'; // HYPO NOE
         url = 'https://www.banking.co.at/appl/ebp/trans/initeingabegiro.html';
         
-        if (provider_url.indexOf('banking.co.at/appl/ebp/trans/GIRO/sea_i.html') > 1) {
+        if (provider_url.indexOf('sea_i.html') < 1) {
             // el not on the create payment form page
             el = null;
         }
@@ -74,10 +74,10 @@ function scanHtml() {
     }
 
     if (!el) {
+        alert('Could not attach ScanSEPA - navigate to the transfer form page first.');
         if (url) {
             window.location.href = url;
         } else {
-            alert('Could not attach ScanSEPA - navigate to the transfer form page first.');
             return false;
         }
     }
