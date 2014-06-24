@@ -55,7 +55,11 @@ function scanHtml() {
         supported = true;
         provider = 'hypo'; // HYPO NOE
         url = 'https://www.banking.co.at/appl/ebp/trans/initeingabegiro.html';
-        // el found on everypage -- check for url banking.co.at/appl/ebp/trans/GIRO/sea_i.html
+        
+        if (provider_url.indexOf('banking.co.at/appl/ebp/trans/GIRO/sea_i.html') > 1) {
+            // el not on the create payment form page
+            el = null;
+        }
     } else if (provider_url.indexOf('bankaustria.at') > 1) {
         el = document.getElementsByClassName('wpt_wcm_content_link_container')[0];
         supported = false;
@@ -70,12 +74,12 @@ function scanHtml() {
     }
 
     if (!el) {
-        alert('Could not attach ScanSEPA - navigate to the transfer form page first.');
         if (url) {
             window.location.href = url;
+        } else {
+            alert('Could not attach ScanSEPA - navigate to the transfer form page first.');
+            return false;
         }
-
-        return false;
     }
 
     var html = document.createElement('div');
