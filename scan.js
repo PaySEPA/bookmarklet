@@ -82,7 +82,10 @@ function scanHtml() {
         }
     }
 
-    if (!document.getElementById('sepa-scanner')) {
+    var scanner = document.getElementById('sepa-scanner');
+    if (scanner) {
+        scanner.style.display = 'block';
+    } else {
         var html = document.createElement('div');
         html.id = 'sepa-scanner';
 
