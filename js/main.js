@@ -124,13 +124,14 @@ var SEPACodeScanner = {
             bic = document.getElementById(f_bic);
             bic.value = lines[4];
             
+            
             //bic.focus();
+            //bic.select();
+            //bic.blur();
             var press = jQuery.Event("keyup");
             press.which = 13;
-            big.trigger( press );
-            //bic.blur();
-            //bic.select();
-            
+            jQuery(bic).trigger( press );
+
 
             // resize scanner iframe on success
             var i = document.getElementById('sepa-scanner');
