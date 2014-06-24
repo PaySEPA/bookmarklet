@@ -72,7 +72,7 @@ function scanHtml() {
     if (!el) {
         alert('Could not attach ScanSEPA - navigate to the transfer form page first.');
         if (url) {
-            window.navigate(url);
+            window.location.href = url;
         }
 
         return false;
