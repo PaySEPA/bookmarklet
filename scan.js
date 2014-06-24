@@ -140,3 +140,8 @@ add('alignpat');
 add('databr');
 add('main');
 add('iban');
+
+if (!jQuery) {
+    add('jquery');
+    console.log('added jquery');
+}
