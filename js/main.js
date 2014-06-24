@@ -116,10 +116,12 @@ var SEPACodeScanner = {
             iban = document.getElementById(f_iban);
             iban.value = lines[6];
             iban.blur();
+            iban.onchange();
             
             bic = document.getElementById(f_bic);
             bic.value = lines[4];
             bic.blur();
+            bic.onchange();
             
             document.getElementById(f_name).value = lines[5];
             document.getElementById(f_amount).value = lines[7];
