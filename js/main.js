@@ -34,6 +34,8 @@ var SEPACodeScanner = {
             provider = 'hypo'; // HYPO NOE
         } else if (provider_url.indexOf('bankaustria.at') > 1) {
             provider = 'ba'; // Bank Austria Uni Credit
+        } else if (provider_url.indexOf('bawagpsk.com') > 1) {
+            provider = 'bawag';
         }
 
         // dev stuff
@@ -90,6 +92,18 @@ var SEPACodeScanner = {
 
                     // also available
                     // usage[1-4], origId, caldate
+            }
+
+            // form input IDs @ BAWAG
+            if (provider == 'bawag') {
+                var f_iban = 'rKontoNr_itxt2',
+                    f_bic = '', // not used at domestic transfers -- SEPA: ebanking.bawagpsk.com/?template=TR_EU_TRANSFER
+                    f_name = '', // use name:empfaenger
+                    f_amount = '', // splitted into name:betrageur and name:betragcent
+                    f_reference = 'zRef_itxt';
+
+                    // also available
+                    // 
             }
 
             // form input IDs @ BA

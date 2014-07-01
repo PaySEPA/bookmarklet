@@ -62,6 +62,11 @@ function scanHtml() {
             // el not on the create payment form page
             el = null;
         }
+    } else if (provider_url.indexOf('bawagpsk.com') > 1) {
+        el = document.getElementById('error_part');
+        supported = true;
+        provider = 'bawag';
+        url = 'https://ebanking.bawagpsk.com/?template=TR_DOMESTIC_TRANSFER';
     } else if (provider_url.indexOf('bankaustria.at') > 1) {
         el = document.getElementsByClassName('wpt_wcm_content_link_container')[0];
         supported = false;
