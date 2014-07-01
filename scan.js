@@ -63,7 +63,7 @@ function scanHtml() {
             el = null;
         }
     } else if (provider_url.indexOf('bawagpsk.com') > 1) {
-        el = document.getElementById('error_part');
+        el = document.getElementsByClassName('top-text')[0];
         supported = true;
         provider = 'bawag';
         url = 'https://ebanking.bawagpsk.com/?template=TR_DOMESTIC_TRANSFER';
