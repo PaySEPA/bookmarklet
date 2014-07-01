@@ -126,17 +126,29 @@ var SEPACodeScanner = {
                 // ...
             }
 
+            if (document.getElementById(f_name)) {
+                document.getElementById(f_name).value = lines[5];
+            }
+            
+            if (document.getElementById(f_amount)) {
+                document.getElementById(f_amount).value = lines[7];
+            }
 
-            document.getElementById(f_name).value = lines[5];
-            document.getElementById(f_amount).value = lines[7];
-            document.getElementById(f_reference).value = lines[9];
-
+            if (document.getElementById(f_reference)) {
+                document.getElementById(f_reference).value = lines[9];
+            }
+            
             iban = document.getElementById(f_iban);
-            iban.value = lines[6];
+            
+            if (iban) {
+                iban.value = lines[6];
+            }
             // iban.blur();
             
             bic = document.getElementById(f_bic);
-            bic.value = lines[4];
+            if (bic) {
+                bic.value = lines[4];
+            }
             
             
             //bic.focus();
