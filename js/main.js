@@ -25,6 +25,8 @@ var SEPACodeScanner = {
             return false;
         }
 
+        this.video.play();
+
         txt.replace(/\r\n/g, '\n');
         lines = txt.split('\n');
 
@@ -36,7 +38,7 @@ var SEPACodeScanner = {
             provider = 'ba'; // Bank Austria Uni Credit
         } else if (provider_url.indexOf('bawagpsk.com') > 1) {
             provider = 'bawag';
-        } else if (provider_url.indexOf('number26.com') > 1) {
+        } else if (provider_url.indexOf('number26.de') > 1) {
             provider = 'number26';
         }
 
