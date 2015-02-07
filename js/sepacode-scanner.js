@@ -3773,6 +3773,7 @@ var SEPACodeScanner = {
             iFrame = null;
 
         if (success) {
+            $('#sepa-scanner').remove();
             return false;
         }
 
