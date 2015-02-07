@@ -98,7 +98,7 @@ var SEPACodeScanner = {
             if (provider == 'bawag') {
                 var f_iban = 'rKontoNr_itxt2',
                     f_bic = '', // not used at domestic transfers -- SEPA: ebanking.bawagpsk.com/?template=TR_EU_TRANSFER
-                    f_name = '', // use name:empfaenger
+                    f_name = '', // use name:empfaenger instead of ID
                     f_amount = '', // splitted into name:betrageur and name:betragcent
                     f_reference = 'zRef_itxt';
 
