@@ -42,6 +42,7 @@ function scanHtml() {
 
     var provider_url = document.location.href,
         el = null,
+        /* type = 'append', // append or prepend scanner to el */
         supported = null,
         provider = null,
         url = null;
@@ -67,6 +68,11 @@ function scanHtml() {
         supported = true;
         provider = 'bawag';
         url = 'https://ebanking.bawagpsk.com/?template=TR_DOMESTIC_TRANSFER';
+    } else if (provider_url.indexOf('number26.de') > 1) {
+        el = document.getElementsByClassName('UITransfers')[0].getElementsByClassName('wrapper')[0];
+        supported = true;
+        provider = 'number26';
+        url = 'https://my.number26.de/#/transfers';
     } else if (provider_url.indexOf('bankaustria.at') > 1) {
         el = document.getElementsByClassName('wpt_wcm_content_link_container')[0];
         supported = false;
@@ -80,7 +86,7 @@ function scanHtml() {
         return false;
     }
 
-    if (!el) {
+    if (!el /*|| provider_url != url*/) {
         alert('Could not attach ScanSEPA - navigate to the transfer form page first.');
         if (url) {
             window.location.href = url;

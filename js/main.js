@@ -36,9 +36,11 @@ var SEPACodeScanner = {
             provider = 'ba'; // Bank Austria Uni Credit
         } else if (provider_url.indexOf('bawagpsk.com') > 1) {
             provider = 'bawag';
+        } else if (provider_url.indexOf('number26.com') > 1) {
+            provider = 'number26';
         }
 
-        // dev stuff
+        // local dev stuff
         if (provider_url.indexOf('ELBA') > 1) {
             provider = 'raika'; // ELBA Raiffeisen
         } else if (provider_url.indexOf('HYPO') > 1) {
@@ -94,6 +96,18 @@ var SEPACodeScanner = {
                     // usage[1-4], origId, caldate
             }
 
+            // form input IDs @ HYPO
+            if (provider == 'number26') {
+                var f_iban = 'iban',
+                    f_bic = 'bic',
+                    f_name = 'name',
+                    f_amount = 'amount',
+                    f_reference = 'description';
+
+                    // also available
+                    // usage[1-4], origId, caldate
+            }
+
             // form input IDs @ BAWAG
             if (provider == 'bawag') {
                 var f_iban = 'rKontoNr_itxt2',
@@ -128,36 +142,49 @@ var SEPACodeScanner = {
 
             if (document.getElementById(f_name)) {
                 document.getElementById(f_name).value = lines[5];
+            } else if (document.getElementsByClassName(f_name)[0]) {
+                document.getElementsByClassName(f_name)[0].value = lines[5];
+            } else if (document.getElementsByName(f_name)[0]) {
+                document.getElementsByName(f_name)[0].value = lines[5];
             }
             
             if (document.getElementById(f_amount)) {
                 document.getElementById(f_amount).value = lines[7];
+            } else if (document.getElementsByClassName(f_amount)[0]) {
+                document.getElementsByClassName(f_amount)[0].value = lines[7];
+            } else if (document.getElementsByName(f_amount)[0]) {
+                document.getElementsByName(f_amount)[0].value = lines[7];
             }
 
             if (document.getElementById(f_reference)) {
                 document.getElementById(f_reference).value = lines[9];
+            } else if (document.getElementsByClassName(f_reference)[0]) {
+                document.getElementsByClassName(f_reference)[0].value = lines[9];
+            } else if (document.getElementsByName(f_reference)[0]) {
+                document.getElementsByName(f_reference)[0].value = lines[9];
             }
             
             iban = document.getElementById(f_iban);
-            
             if (iban) {
                 iban.value = lines[6];
+            } else if (document.getElementsByClassName(f_iban)[0]) {
+                document.getElementsByClassName(f_iban)[0].value = lines[6];
+            } else if (document.getElementsByName(f_iban)[0]) {
+                document.getElementsByName(f_iban)[0].value = lines[6];
             }
-            // iban.blur();
             
             bic = document.getElementById(f_bic);
             if (bic) {
                 bic.value = lines[4];
+            } else if (document.getElementsByClassName(f_bic)[0]) {
+                document.getElementsByClassName(f_bic)[0].value = lines[4];
+            } else if (document.getElementsByName(f_bic)[0]) {
+                document.getElementsByName(f_bic)[0].value = lines[4];
             }
-            
-            
-            //bic.focus();
-            //bic.select();
-            //bic.blur();
+
             var press = jQuery.Event("keyup");
             press.which = 13;
             jQuery(bic).trigger( press );
-
 
             // resize scanner iframe on success
             var i = document.getElementById('sepa-scanner');
@@ -168,7 +195,6 @@ var SEPACodeScanner = {
             // stop updating data
             // TODO also stop the webcam
             success = true;
-
         } else {
             error.show();
             return false;
