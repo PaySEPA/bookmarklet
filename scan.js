@@ -69,7 +69,10 @@ function scanHtml() {
         provider = 'bawag';
         url = 'https://ebanking.bawagpsk.com/?template=TR_DOMESTIC_TRANSFER';
     } else if (provider_url.indexOf('number26.de') > 1) {
-        el = document.getElementsByClassName('UITransfers')[0].getElementsByClassName('wrapper')[0].getElementsByTagName('h1')[0];
+        el = document.getElementsByClassName('UITransfers')[0];
+        if (el) {
+            el = el.getElementsByClassName('wrapper')[0].getElementsByTagName('h1')[0];
+        }
         supported = true;
         provider = 'number26';
         url = 'https://my.number26.de/#/transfers';

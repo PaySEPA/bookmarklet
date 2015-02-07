@@ -3947,7 +3947,7 @@ var SEPACodeScanner = {
             // TODO also stop the webcam
             success = true;
         } else {
-            error.show();
+            $(error).show();
             return false;
         }
 
