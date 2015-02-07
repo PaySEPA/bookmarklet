@@ -144,24 +144,24 @@ var SEPACodeScanner = {
 
             if (document.getElementById(f_name)) {
                 document.getElementById(f_name).value = lines[5];
-            } else if (document.getElementsByClassName(f_name)[0]) {
-                document.getElementsByClassName(f_name)[0].value = lines[5];
+            // } else if (document.getElementsByClassName(f_name)[0]) {
+            //     document.getElementsByClassName(f_name)[0].value = lines[5];
             } else if (document.getElementsByName(f_name)[0]) {
                 document.getElementsByName(f_name)[0].value = lines[5];
             }
             
             if (document.getElementById(f_amount)) {
                 document.getElementById(f_amount).value = lines[7];
-            } else if (document.getElementsByClassName(f_amount)[0]) {
-                document.getElementsByClassName(f_amount)[0].value = lines[7];
+            // } else if (document.getElementsByClassName(f_amount)[0]) {
+            //     document.getElementsByClassName(f_amount)[0].value = lines[7];
             } else if (document.getElementsByName(f_amount)[0]) {
                 document.getElementsByName(f_amount)[0].value = lines[7];
             }
 
             if (document.getElementById(f_reference)) {
                 document.getElementById(f_reference).value = lines[9];
-            } else if (document.getElementsByClassName(f_reference)[0]) {
-                document.getElementsByClassName(f_reference)[0].value = lines[9];
+            // } else if (document.getElementsByClassName(f_reference)[0]) {
+            //     document.getElementsByClassName(f_reference)[0].value = lines[9];
             } else if (document.getElementsByName(f_reference)[0]) {
                 document.getElementsByName(f_reference)[0].value = lines[9];
             }
@@ -169,8 +169,8 @@ var SEPACodeScanner = {
             iban = document.getElementById(f_iban);
             if (iban) {
                 iban.value = lines[6];
-            } else if (document.getElementsByClassName(f_iban)[0]) {
-                document.getElementsByClassName(f_iban)[0].value = lines[6];
+            // } else if (document.getElementsByClassName(f_iban)[0]) {
+            //     document.getElementsByClassName(f_iban)[0].value = lines[6];
             } else if (document.getElementsByName(f_iban)[0]) {
                 document.getElementsByName(f_iban)[0].value = lines[6];
             }
@@ -178,8 +178,8 @@ var SEPACodeScanner = {
             bic = document.getElementById(f_bic);
             if (bic) {
                 bic.value = lines[4];
-            } else if (document.getElementsByClassName(f_bic)[0]) {
-                document.getElementsByClassName(f_bic)[0].value = lines[4];
+            // } else if (document.getElementsByClassName(f_bic)[0]) {
+            //     document.getElementsByClassName(f_bic)[0].value = lines[4];
             } else if (document.getElementsByName(f_bic)[0]) {
                 document.getElementsByName(f_bic)[0].value = lines[4];
             }
