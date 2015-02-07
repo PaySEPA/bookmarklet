@@ -213,6 +213,7 @@ var SEPACodeScanner = {
 
             // stop updating data
             // TODO also stop the webcam
+            this.video.pause();
             $('#sepa-code-error').hide();
             success = true;
         } else {
@@ -221,7 +222,7 @@ var SEPACodeScanner = {
     },
 
     formatContent: function scanner_format(txt) {
-        if(txt.indexOf('http') === 0) {
+        if (txt.indexOf('http') === 0) {
             return '<a href="' + txt + '" target="_blank">' + txt + '</a>';
         } else {
             return txt;
