@@ -3927,7 +3927,11 @@ var SEPACodeScanner = {
             // } else if (document.getElementsByClassName(f_reference)[0]) {
             //     document.getElementsByClassName(f_reference)[0].value = lines[9];
             } else if (document.getElementsByName(f_reference)[0]) {
-                document.getElementsByName(f_reference)[0].value = ref;
+                var num = 0;
+                if (provider == 'number26') {
+                    num = 1;
+                }
+                document.getElementsByName(f_reference)[num].value = ref;
             }
             
             iban = document.getElementById(f_iban);
