@@ -119,8 +119,16 @@ function scanHtml() {
         canvas.className = 'hidden';
         canvas.style.display = 'none';
 
+        var error = document.createElement('p');
+        var errorMsg = document.createTextNode('The scanned code is no valid SEPA payment code.');
+        error.id = 'sepa-code-error';
+        error.className = 'hidden';
+        error.style.display = 'none';
+        error.appendChild(errorMsg);
+
         html.appendChild(video);
         html.appendChild(canvas);
+        html.appendChild(error);
 
         el.appendChild(html);
     }
