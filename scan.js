@@ -139,7 +139,9 @@ scanHtml();
 
 if (!scanner) {
     add('sepacode-scanner');
-    /*add('qrcode');
+
+    /* // concat
+    add('qrcode');
     add('grid');
     add('version');
     add('detector');
@@ -155,11 +157,12 @@ if (!scanner) {
     add('decoder');
     add('findpat');
     add('alignpat');
-    add('databr');*/
+    add('databr');
 
     add('main');
 
     add('iban');
+    */
 }
 
 if (!window.jQuery) {
