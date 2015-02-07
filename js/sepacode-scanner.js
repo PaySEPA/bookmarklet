@@ -3945,9 +3945,11 @@ var SEPACodeScanner = {
 
             // stop updating data
             // TODO also stop the webcam
+            $('#sepa-code-error').hide();
             success = true;
         } else {
-            $(error).show();
+            $('#sepa-code-error').show();
+            $('#sepa-code-error').removeClass('hidden');
             return false;
         }
 
