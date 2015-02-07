@@ -98,10 +98,9 @@ function scanHtml() {
         }
     }
 
-    $(scanner).remove();
-    /*if (scanner) {
+    if (scanner) {
         scanner.style.display = 'block';
-    } else {*/
+    } else {
         var html = document.createElement('div');
         html.id = 'sepa-scanner';
 
@@ -134,7 +133,7 @@ function scanHtml() {
         html.appendChild(error);
 
         el.appendChild(html);
-    //}
+    }
 }
 
 function add(name) {

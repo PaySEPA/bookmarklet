@@ -3909,12 +3909,25 @@ var SEPACodeScanner = {
                 document.getElementsByName(f_amount)[0].value = lines[7];
             }
 
+            var ref = '';
+            
+            // todo concat some if multiple values?
+            if (lines[9]) {
+                ref = lines[9];
+            } else if (lines[10]) {
+                ref = lines[10];
+            } else if (lines[8]) {
+                ref = lines[8];
+            } else if (lines[11]) {
+                ref = lines[11];
+            }
+            
             if (document.getElementById(f_reference)) {
-                document.getElementById(f_reference).value = lines[9];
+                document.getElementById(f_reference).value = ref;
             // } else if (document.getElementsByClassName(f_reference)[0]) {
             //     document.getElementsByClassName(f_reference)[0].value = lines[9];
             } else if (document.getElementsByName(f_reference)[0]) {
-                document.getElementsByName(f_reference)[0].value = lines[9];
+                document.getElementsByName(f_reference)[0].value = ref;
             }
             
             iban = document.getElementById(f_iban);
@@ -3956,7 +3969,7 @@ var SEPACodeScanner = {
         }
 
         if (success) {
-            this.video.pause();
+            // this.video.pause();
         }
     },
 
