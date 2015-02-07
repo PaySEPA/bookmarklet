@@ -2910,7 +2910,7 @@ function FinderPatternFinder()
 			if (startSize < 3)
 			{
 				// Couldn't find enough finder patterns
-				throw "Couldn't find enough finder patterns";
+				throw "Couldn't detect QR code";
 			}
 			
 			// Filter outlier possibilities whose module size is too different
@@ -3949,11 +3949,11 @@ var SEPACodeScanner = {
             success = true;
         } else {
             $('#sepa-code-error').show();
-            $('#sepa-code-error').removeClass('hidden');
-            return false;
+            success = false;
+            // return false;
         }
 
-        if(txt) {
+        if (txt) {
             this.video.pause();
         }
     },

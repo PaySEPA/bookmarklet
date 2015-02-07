@@ -198,11 +198,11 @@ var SEPACodeScanner = {
             success = true;
         } else {
             $('#sepa-code-error').show();
-            $('#sepa-code-error').removeClass('hidden');
-            return false;
+            success = false;
+            // return false;
         }
 
-        if(txt) {
+        if (txt) {
             this.video.pause();
         }
     },
