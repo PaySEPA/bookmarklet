@@ -22,11 +22,10 @@ var SEPACodeScanner = {
             iFrame = null;
 
         if (success) {
+            this.video.pause();
             $('#sepa-scanner').remove();
             return false;
         }
-
-        this.video.play();
 
         txt.replace(/\r\n/g, '\n');
         lines = txt.split('\n');
@@ -218,12 +217,6 @@ var SEPACodeScanner = {
             success = true;
         } else {
             $('#sepa-code-error').show();
-            // success = false;
-            // return false;
-        }
-
-        if (success) {
-            // this.video.pause();
         }
     },
 
