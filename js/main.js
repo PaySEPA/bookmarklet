@@ -37,20 +37,12 @@ var SEPACodeScanner = {
         } else if (provider_url.indexOf('bankaustria.at') > 1) {
             provider = 'ba'; // Bank Austria Uni Credit
         } else if (provider_url.indexOf('bawagpsk.com') > 1) {
-            provider = 'bawag';
+            provider = 'bawag'; // BAWAG
         } else if (provider_url.indexOf('number26.de') > 1) {
-            provider = 'number26';
+            provider = 'number26'; // NUMBER26
         }
 
-        // local dev stuff
-        if (provider_url.indexOf('ELBA') > 1) {
-            provider = 'raika'; // ELBA Raiffeisen
-        } else if (provider_url.indexOf('HYPO') > 1) {
-            provider = 'hypo'; // HYPO NOE
-        }
-
-        console.log(lines);
-        console.log(provider, provider_url);
+        console.log('*** scanSEPA log', provider, lines, provider_url);
 
         var iban,
             bic,
@@ -58,17 +50,17 @@ var SEPACodeScanner = {
             recipient,
             reference;
 
-        if(lines[0] == 'BCD' && lines[1] == '001') {
+        if (lines.length == 12 && lines[0] == 'BCD' && lines[1] == '001') {
             if (lines[7] && lines[7].indexOf('EUR') === 0) {
                 lines[7] = lines[7].substr(3);
                 if (lines[7].indexOf(',') < 1) {
                     lines[7] = lines[7] + ',00';
                 }
 
-                // check for right format (0,00 vs 0.00)
+                // TODO check for right format (0,00 vs 0.00)
                 // console.log('** amount', lines[7]);
             }
-            
+
             if (lines[6]) {
                 // use print format for all right now
                 lines[6] = IBAN.printFormat(lines[6]);
@@ -98,20 +90,18 @@ var SEPACodeScanner = {
                     // usage[1-4], origId, caldate
             }
 
-            // form input IDs @ HYPO
+            // form input IDs @ NUMBER26
             if (provider == 'number26') {
                 var f_iban = 'iban',
                     f_bic = 'bic',
                     f_name = 'name',
                     f_amount = 'amount',
                     f_reference = 'description';
-
-                    // also available
-                    // usage[1-4], origId, caldate
             }
 
             // form input IDs @ BAWAG
             if (provider == 'bawag') {
+                // TODO
                 var f_iban = 'rKontoNr_itxt2',
                     f_bic = '', // not used at domestic transfers -- SEPA: ebanking.bawagpsk.com/?template=TR_EU_TRANSFER
                     f_name = '', // use name:empfaenger instead of ID
@@ -119,7 +109,7 @@ var SEPACodeScanner = {
                     f_reference = 'zRef_itxt';
 
                     // also available
-                    // 
+                    // TODO
             }
 
             // form input IDs @ BA
@@ -129,14 +119,6 @@ var SEPACodeScanner = {
                     f_name = 'generalForm:f04_benefName1subviewEditRend:j_id148:j_id150:f04_benefName1',
                     f_amount = 'generalForm:f09_operationAmountsubviewEditRend:editMode:valueChangeEvent:existId:f09_operationAmount',
                     f_reference = 'generalForm:f08_customerDatasubviewEditRend:j_id219:j_id221:f08_customerData';
-
-                // not working
-                iFrame = window.frames['appFrameUnico'];
-                iFrame.document.getElementById(f_iban).value = lines[6];
-                iFrame.document.getElementById(f_bic).value = lines[4];
-                iFrame.document.getElementById(f_name).value = lines[5];
-                iFrame.document.getElementById(f_amount).value = lines[7];
-                iFrame.document.getElementById(f_reference).value = lines[9];
 
                 // also available
                 // ...
@@ -149,7 +131,7 @@ var SEPACodeScanner = {
             } else if (document.getElementsByName(f_name)[0]) {
                 document.getElementsByName(f_name)[0].value = lines[5];
             }
-            
+
             if (document.getElementById(f_amount)) {
                 document.getElementById(f_amount).value = lines[7];
             // } else if (document.getElementsByClassName(f_amount)[0]) {
@@ -159,8 +141,7 @@ var SEPACodeScanner = {
             }
 
             var ref = '';
-            
-            // todo concat some if multiple values?
+            // TODO concat some if multiple values?
             if (lines[9]) {
                 ref = lines[9];
             } else if (lines[10]) {
@@ -170,7 +151,7 @@ var SEPACodeScanner = {
             } else if (lines[11]) {
                 ref = lines[11];
             }
-            
+
             if (document.getElementById(f_reference)) {
                 document.getElementById(f_reference).value = ref;
             // } else if (document.getElementsByClassName(f_reference)[0]) {
@@ -182,7 +163,7 @@ var SEPACodeScanner = {
                 }
                 document.getElementsByName(f_reference)[num].value = ref;
             }
-            
+
             iban = document.getElementById(f_iban);
             if (iban) {
                 iban.value = lines[6];
@@ -191,7 +172,7 @@ var SEPACodeScanner = {
             } else if (document.getElementsByName(f_iban)[0]) {
                 document.getElementsByName(f_iban)[0].value = lines[6];
             }
-            
+
             bic = document.getElementById(f_bic);
             if (bic) {
                 bic.value = lines[4];
@@ -201,15 +182,16 @@ var SEPACodeScanner = {
                 document.getElementsByName(f_bic)[0].value = lines[4];
             }
 
-            var press = jQuery.Event("keyup");
-            press.which = 13;
-            jQuery(bic).trigger( press );
+            // TODO raika? or other?
+            if (provider == 'raika') {
+                var press = jQuery.Event("keyup");
+                press.which = 13;
+                jQuery(bic).trigger( press );
+            }
 
-            // resize scanner iframe on success
+            // resize sepa scanner on success
             var i = document.getElementById('sepa-scanner');
             i.style.display = 'none';
-            // i.width = 100;
-            // i.height = 30;
 
             // stop updating data
             // TODO also stop the webcam
@@ -278,17 +260,15 @@ var SEPACodeScanner = {
                 self.context = self.canvas.getContext("2d");
                 self.context.clearRect(0, 0, self.width, self.height);
                 // self.imageData = self.context.getImageData(0,0,
-                //   self.video.videoWidth,self.video.videoHeight);
+                // self.video.videoWidth,self.video.videoHeight);
             }
         }, false);
-
         // this.capture.style.display = 'none';
-
         this.video.addEventListener('play', function () {
             //It should repeatly capture till a qrcode is successfully captured.
             setInterval(function () {
                 self.scanQRCode();
-            }, 1000);
+            }, 500);
         }, false);
     },
 
@@ -332,12 +312,10 @@ var SEPACodeScanner = {
      * Decode the QRCode
      */
     scanQRCode: function scanner_scanQRCode() {
-        // this.video.play();
         this.context.drawImage(this.video, 0, 0, this.width, this.height);
         var data = this.canvas.toDataURL('image/png');
-        // this.photo.setAttribute('src', data);
 
-        if(qrcode.decode()) {
+        if (qrcode.decode()) {
             // Stop automatic capture.
             // this.capture.style.display = 'block';
             this.video.pause();
@@ -354,8 +332,3 @@ var SEPACodeScanner = {
 };
 
 SEPACodeScanner.init();
-
-/*window.addEventListener('load', function onload_scanner() {
-    window.removeEventListener('load', onload_scanner);
-    SEPACodeScanner.init();
-});*/
