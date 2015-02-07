@@ -3949,11 +3949,11 @@ var SEPACodeScanner = {
             success = true;
         } else {
             $('#sepa-code-error').show();
-            success = false;
+            // success = false;
             // return false;
         }
 
-        if (txt) {
+        if (success) {
             this.video.pause();
         }
     },
