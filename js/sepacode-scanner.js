@@ -3808,7 +3808,7 @@ var SEPACodeScanner = {
             reference;
 
         if(lines[0] == 'BCD' && lines[1] == '001') {
-            if (lines[7].indexOf('EUR') === 0) {
+            if (lines[7] && lines[7].indexOf('EUR') === 0) {
                 lines[7] = lines[7].substr(3);
                 if (lines[7].indexOf(',') < 1) {
                     lines[7] = lines[7] + ',00';
