@@ -8,7 +8,14 @@ function scanSEPAcode() {
         provider = null,
         url = null;
 
-    if (provider_url.indexOf('raiffeisen.at') > 1) {
+    if (provider_url.indexOf('paysepa.github.io') > 1 ||
+        provider_url.indexOf('paysepa.eu') > 1) {
+        el = document.getElementById('transfer');
+        supported = true;
+        provider = 'paysepa'; // PaySEPA demo
+        url = 'https://paysepa.github.io/transfer';
+
+    } else if (provider_url.indexOf('raiffeisen.at') > 1) {
         el = document.getElementById('j_id1_zv_WAR_zvportlet_INSTANCE_4NsO_:j_id4');
         supported = true;
         provider = 'raika'; // ELBA Raiffeisen
@@ -39,8 +46,6 @@ function scanSEPAcode() {
         el = document.getElementsByClassName('wpt_wcm_content_link_container')[0];
         supported = false;
         provider = 'ba'; // Bank Austria / Uni Credit
-    } else {
-        // NONE
     }
 
     if (!supported) {
