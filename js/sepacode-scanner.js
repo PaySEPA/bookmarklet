@@ -3787,7 +3787,7 @@ var SEPACodeScanner = {
         txt.replace(/\r\n/g, '\n');
         lines = txt.split('\n');
 
-        if (provider_url.indexOf('paysepa.github.io') > 1 ||
+        if (provider_url.indexOf('github.io') > 1 ||
             provider_url.indexOf('paysepa.eu') > 1) {
             provider = 'paysepa'; // PaySEPA demo
         } else if (provider_url.indexOf('raiffeisen.at') > 1) {

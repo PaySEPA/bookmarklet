@@ -8,7 +8,7 @@ function scanSEPAcode() {
         provider = null,
         url = null;
 
-    if (provider_url.indexOf('paysepa.github.io') > 1 ||
+    if (provider_url.indexOf('github.io') > 1 ||
         provider_url.indexOf('paysepa.eu') > 1) {
         el = document.getElementById('transfer');
         supported = true;
