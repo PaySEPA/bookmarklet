@@ -107,8 +107,8 @@ function scanSEPAcode() {
         drops('#sepa-scanner', {
                             'url': 'http://paysepa.loc/test/upload/upload.php',
                             'complete': function() { console.log('all uploaded'); $('#sepa-scanner').hide(); },
-                            'dragover': function() { document.getElementById('upload').style.border = '1px solid green'; },
-                            'dragleave': function() { document.getElementById('upload').style.border = ''; },
+                            'dragover': function() { document.getElementById('sepa-scanner').style.border = '1px solid green'; },
+                            'dragleave': function() { document.getElementById('sepa-scanner').style.border = ''; },
                             'drop': function() { console.log('drop'); }
                         }
         );
