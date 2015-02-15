@@ -9,6 +9,7 @@ function scanSEPAcode() {
         url = null;
 
     if (provider_url.indexOf('github.io') > 1 ||
+        provider_url.indexOf('paysepa.loc') > 1 ||
         provider_url.indexOf('paysepa.eu') > 1) {
         el = document.getElementById('transfer');
         supported = true;

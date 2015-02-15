@@ -31,6 +31,7 @@ var SEPACodeScanner = {
         lines = txt.split('\n');
 
         if (provider_url.indexOf('github.io') > 1 ||
+            provider_url.indexOf('paysepa.loc') > 1 ||
             provider_url.indexOf('paysepa.eu') > 1) {
             provider = 'paysepa'; // PaySEPA demo
         } else if (provider_url.indexOf('raiffeisen.at') > 1) {
@@ -52,6 +53,14 @@ var SEPACodeScanner = {
             amount,
             recipient,
             reference;
+
+        // TODO do proper validation checks here
+        /*if (lines.length < 12) {
+            var i = 0;
+            for (l in lines) {
+                i++;
+            }
+        }*/
 
         if (lines.length == 12 && lines[0] == 'BCD' && lines[1] == '001') {
             if (lines[7] && lines[7].indexOf('EUR') === 0) {
