@@ -68,6 +68,8 @@ function scanSEPAcode() {
     } else {
         var html = document.createElement('div');
         html.id = 'sepa-scanner';
+        html.style.width = 320;
+        html.style.height = 240;
 
         var video = document.createElement('video');
         video.id = 'v';
@@ -112,6 +114,7 @@ function add(name) {
     scan.defer = true;
     scan.type = 'text/javascript';
     scan.src = 'https://paysepa.github.io/bookmarklet/js/' + name + '.js';
+    // scan.src = 'http://paysepa.loc/test/github/bookmarklet/js/' + name + '.js';
     head.appendChild(scan);
 }
 

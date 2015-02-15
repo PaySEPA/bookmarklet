@@ -4126,11 +4126,21 @@ var SEPACodeScanner = {
 
 
         drops('#sepa-scanner', {
-                            'url': 'http://paysepa.loc/test/upload/upload.php',
-                            'complete': function(t) { console.log('all uploaded', t); $('#sepa-scanner').hide(); },
-                            'dragover': function() { document.getElementById('sepa-scanner').style.border = '1px solid green'; },
-                            'dragleave': function() { document.getElementById('sepa-scanner').style.border = ''; },
-                            'drop': function() { console.log('drop'); }
+                            'url': 'http://paysepa.eu/test/upload/upload.php',
+                            'complete': function() {
+                                            $('#sepa-scanner').hide();
+                                        },
+                            'success': function(xhr, file) {
+                                            // console.log('file uploaded', xhr, file);
+                                            $('#sepa-scanner').hide();
+                                            var json = JSON.parse(xhr.response);
+
+                                            checkDocumentStatus(json);
+                                            
+                                        },
+                            'dragover': function() { document.getElementById('sepa-scanner').style.outline = '2px solid green'; },
+                            'dragleave': function() { document.getElementById('sepa-scanner').style.outline = ''; },
+                            'drop': function() { /* console.log('drop');*/  }
                         }
         );
 
@@ -4186,7 +4196,7 @@ var SEPACodeScanner = {
         var dt = e.dataTransfer;
         var files = dt.files;
 
-        console.log('file dropped ...', files);
+        // console.log('file dropped ...', files);
 
         this.handleFiles(files);
     },
@@ -4230,7 +4240,102 @@ var SEPACodeScanner = {
     }
 };
 
-SEPACodeScanner.init();;(function(exports){
+SEPACodeScanner.init();
+
+
+
+function checkDocumentStatus(json) {
+    $.ajax({
+        'url': json.gini.document_url,
+        'crossDomain': true,
+        'headers': {'Authorization': 'Bearer ' + json.gini.access_token,
+                    'Accept': 'application/vnd.gini.v1+json',
+                    },
+        'success': function(xhr) {
+            // console.log('sse', xhr);
+            
+            if (xhr.progress != 'COMPLETED') {
+                setTimeout(function() { checkDocumentStatus(json); }, 500);
+            } else if (xhr.progress == 'COMPLETED') {
+                getExtractions(json, xhr);
+            }
+        }
+    });
+}
+
+
+function getExtractions(json, xhr) {
+    // console.log('getExtractions', json, xhr);
+    
+    $.ajax({
+        'url': json.gini.document_url + '/extractions',
+        'crossDomain': true,
+        'headers': {'Authorization': 'Bearer ' + json.gini.access_token,
+                    'Accept': 'application/vnd.gini.v1+json',
+                    },
+        'success': function(xhr2) {
+            console.log('extractions', xhr2.extractions);
+
+            data = xhr2.extractions;
+
+            var iban = data.iban.value,
+                bic = data.bic.value,
+                name = data.senderName.value,
+                amount = data.amountToPay.value.replace(':EUR', '').replace('.', ','),
+                reference = (data.paymentReference && data.paymentReference.value) || (data.invoiceId && data.invoiceId.value) || (data.referenceId && data.referenceId.value) || (data.customerId && data.customerId.value);
+            
+            var f_iban = 'iban',
+                f_bic = 'bic',
+                f_name = 'name',
+                f_amount = 'amount',
+                f_reference = 'description';
+            
+            
+                if (document.getElementById(f_name)) {
+                    document.getElementById(f_name).value = name;
+                // } else if (document.getElementsByClassName(f_name)[0]) {
+                //     document.getElementsByClassName(f_name)[0].value = lines[5];
+                } else if (document.getElementsByName(f_name)[0]) {
+                    document.getElementsByName(f_name)[0].value = name;
+                }
+
+                if (document.getElementById(f_amount)) {
+                    document.getElementById(f_amount).value = amount;
+                // } else if (document.getElementsByClassName(f_amount)[0]) {
+                //     document.getElementsByClassName(f_amount)[0].value = lines[7];
+                } else if (document.getElementsByName(f_amount)[0]) {
+                    document.getElementsByName(f_amount)[0].value = amount;
+                }
+
+
+                if (document.getElementById(f_reference)) {
+                    document.getElementById(f_reference).value = reference;
+                // } else if (document.getElementsByClassName(f_reference)[0]) {
+                //     document.getElementsByClassName(f_reference)[0].value = lines[9];
+                } else if (document.getElementsByName(f_reference)[0]) {
+                    document.getElementsByName(f_reference)[0].value = reference;
+                }
+
+                var xiban = document.getElementById(f_iban);
+                if (xiban) {
+                    xiban.value = iban;
+                // } else if (document.getElementsByClassName(f_iban)[0]) {
+                //     document.getElementsByClassName(f_iban)[0].value = lines[6];
+                } else if (document.getElementsByName(f_iban)[0]) {
+                    document.getElementsByName(f_iban)[0].value = iban;
+                }
+
+                var xbic = document.getElementById(f_bic);
+                if (xbic) {
+                    xbic.value = bic;
+                // } else if (document.getElementsByClassName(f_bic)[0]) {
+                //     document.getElementsByClassName(f_bic)[0].value = lines[4];
+                } else if (document.getElementsByName(f_bic)[0]) {
+                    document.getElementsByName(f_bic)[0].value = bic;
+                }
+        }
+    });
+};(function(exports){
 
     // Array.prototype.map polyfill
     // code from https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Array/map
