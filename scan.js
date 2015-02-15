@@ -103,6 +103,15 @@ function scanSEPAcode() {
         html.appendChild(info);
 
         el.appendChild(html);
+
+        drops('#sepa-scanner', {
+                            'url': 'http://paysepa.loc/test/upload/upload.php',
+                            'complete': function() { console.log('all uploaded'); },
+                            'dragover': function() { document.getElementById('upload').style.border = '1px solid green'; },
+                            'dragleave': function() { document.getElementById('upload').style.border = ''; },
+                            'drop': function() { console.log('drop'); }
+                        }
+        );
     }
 }
 
@@ -118,6 +127,7 @@ function add(name) {
 
 if (!window.jQuery) {
     add('jquery');
+    // use zepto instead?
 }
 
 if (!scanner) {

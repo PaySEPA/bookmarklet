@@ -301,6 +301,8 @@ var SEPACodeScanner = {
         var dt = e.dataTransfer;
         var files = dt.files;
 
+        console.log('file dropped ...');
+
         this.handleFiles(files);
     },
 
