@@ -133,6 +133,7 @@ if (!window.jQuery) {
 }
 
 if (!scanner) {
+    add('drops');
     add('sepacode-scanner');
 }
 
