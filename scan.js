@@ -106,6 +106,17 @@ function scanSEPAcode() {
     }
 }
 
+function initDrop() {
+    drops('#sepa-scanner', {
+                        'url': 'http://paysepa.loc/test/upload/upload.php',
+                        'complete': function() { console.log('all uploaded'); $('#sepa-scanner').hide(); },
+                        'dragover': function() { document.getElementById('sepa-scanner').style.border = '1px solid green'; },
+                        'dragleave': function() { document.getElementById('sepa-scanner').style.border = ''; },
+                        'drop': function() { console.log('drop'); }
+                    }
+    );
+}
+
 function add(name) {
     var head = document.getElementsByTagName("head")[0];
     var scan = document.createElement('script');
@@ -123,15 +134,7 @@ if (!window.jQuery) {
 
 if (!scanner) {
     add('sepacode-scanner');
-
-    drops('#sepa-scanner', {
-                        'url': 'http://paysepa.loc/test/upload/upload.php',
-                        'complete': function() { console.log('all uploaded'); $('#sepa-scanner').hide(); },
-                        'dragover': function() { document.getElementById('sepa-scanner').style.border = '1px solid green'; },
-                        'dragleave': function() { document.getElementById('sepa-scanner').style.border = ''; },
-                        'drop': function() { console.log('drop'); }
-                    }
-    );
 }
 
 scanSEPAcode();
+initDrop();
