@@ -62,7 +62,7 @@ var SEPACodeScanner = {
             }
         }*/
 
-        if (lines.length == 12 && lines[0] == 'BCD' && lines[1] == '001') {
+        if (/*lines.length == 12 &&*/ lines[0] == 'BCD' && lines[1] == '001') {
             if (lines[7] && lines[7].indexOf('EUR') === 0) {
                 lines[7] = lines[7].substr(3);
                 if (lines[7].indexOf(',') < 1) {
@@ -104,6 +104,16 @@ var SEPACodeScanner = {
 
             // form input IDs @ NUMBER26
             if (provider == 'number26') {
+                var f_iban = 'iban',
+                    f_bic = 'bic',
+                    f_name = 'name',
+                    f_amount = 'amount',
+                    f_reference = 'description';
+            }
+
+
+            // form input IDs @ NUMBER26
+            if (provider == 'paysepa') {
                 var f_iban = 'iban',
                     f_bic = 'bic',
                     f_name = 'name',
