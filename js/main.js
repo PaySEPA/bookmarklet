@@ -414,10 +414,10 @@ function getExtractions(json, xhr) {
 
             data = xhr2.extractions;
 
-            var iban = data.iban.value,
-                bic = data.bic.value,
-                name = data.senderName.value,
-                amount = data.amountToPay.value.replace(':EUR', '').replace('.', ','),
+            var iban = (data.iban && data.iban.value) || '',
+                bic = (data.bic && data.bic.value) || '',
+                name = (data.senderName && data.senderName.value) || '',
+                amount = (data.amountToPay && data.amountToPay.value.replace(':EUR', '').replace('.', ',')) || 0,
                 reference = (data.paymentReference && data.paymentReference.value) || (data.invoiceId && data.invoiceId.value) || (data.referenceId && data.referenceId.value) || (data.customerId && data.customerId.value);
             
             var f_iban = 'iban',
