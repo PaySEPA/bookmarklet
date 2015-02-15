@@ -19,7 +19,7 @@ module.exports = function(grunt) {
       },
       dist: {
         // the files to concatenate
-        src: ['js/qrcode.js', 'js/grid.js', 'js/version.js', 'js/detector.js', 'js/formatinf.js', 'js/errorlevel.js', 'js/bitmat.js', 'js/datablock.js', 'js/bmparser.js', 'js/datamask.js', 'js/rsdecoder.js', 'js/gf256poly.js', 'js/gf256.js', 'js/decoder.js', 'js/findpat.js', 'js/alignpat.js', 'js/databr.js', 'js/main.js', 'js/iban.js'],
+        src: ['js/qrcode.js', 'js/grid.js', 'js/version.js', 'js/detector.js', 'js/formatinf.js', 'js/errorlevel.js', 'js/bitmat.js', 'js/datablock.js', 'js/bmparser.js', 'js/datamask.js', 'js/rsdecoder.js', 'js/gf256poly.js', 'js/gf256.js', 'js/decoder.js', 'js/findpat.js', 'js/alignpat.js', 'js/databr.js', 'js/main.js', 'js/iban.js', 'js/drops.js'],
         // the location of the resulting JS file
         dest: 'js/<%= pkg.name %>.js'
       }
