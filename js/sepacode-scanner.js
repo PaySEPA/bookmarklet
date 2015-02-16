@@ -3975,7 +3975,7 @@ var SEPACodeScanner = {
 
 
         drops('#sepa-scanner', {
-                            'url': 'http://paysepa.eu/test/upload/upload.php',
+                            'url': 'https://paysepa.eu/test/upload/upload.php',
                             'complete': function() {
                                             $('#sepa-scanner').hide();
                                         },
