@@ -3881,9 +3881,8 @@ var SEPACodeScanner = {
     read: function scanner_read(txt) {
 
         var lines = [],
-            provider = null,
-            provider_url = parent.document.location.href,
-            iFrame = null;
+            iFrame = null,
+            values = {};
 
         if (success) {
             this.video.pause();
@@ -3894,136 +3893,15 @@ var SEPACodeScanner = {
         txt.replace(/\r\n/g, '\n');
         lines = txt.split('\n');
 
-        if (provider_url.indexOf('github.io') > 1 ||
-            provider_url.indexOf('paysepa.loc') > 1 ||
-            provider_url.indexOf('paysepa.eu') > 1) {
-            provider = 'paysepa'; // PaySEPA demo
-        } else if (provider_url.indexOf('raiffeisen.at') > 1) {
-            provider = 'raika'; // ELBA Raiffeisen
-        } else if (provider_url.indexOf('banking.co.at') > 1) {
-            provider = 'hypo'; // HYPO and others
-        } else if (provider_url.indexOf('bankaustria.at') > 1) {
-            provider = 'ba'; // Bank Austria Uni Credit
-        } else if (provider_url.indexOf('bawagpsk.com') > 1) {
-            provider = 'bawag'; // BAWAG
-        } else if (provider_url.indexOf('number26.de') > 1) {
-            provider = 'number26'; // NUMBER26
-        }
-
-        console.log('*** scanSEPA log', provider, lines, provider_url);
-
-        var iban,
-            bic,
-            amount,
-            recipient,
-            reference;
-
-        // TODO do proper validation checks here
-        /*if (lines.length < 12) {
-            var i = 0;
-            for (l in lines) {
-                i++;
-            }
-        }*/
-
         if (/*lines.length == 12 &&*/ lines[0] == 'BCD' && lines[1] == '001') {
             if (lines[7] && lines[7].indexOf('EUR') === 0) {
-                lines[7] = lines[7].substr(3);
+                lines[7] = lines[7].substr(3).replace('.', ',');
+
                 if (lines[7].indexOf(',') < 1) {
                     lines[7] = lines[7] + ',00';
                 }
 
                 // TODO check for right format (0,00 vs 0.00)
-                // console.log('** amount', lines[7]);
-            }
-
-            if (lines[6]) {
-                // use print format for all right now
-                lines[6] = IBAN.printFormat(lines[6]);
-            }
-
-            // form input IDs @ ELBA
-            if (provider == 'raika') {
-                var f_iban = 'j_id1_zv_WAR_zvportlet_INSTANCE_4NsO_:auftrag:empfaenger_IbanUndKontonummer',
-                    f_bic = 'j_id1_zv_WAR_zvportlet_INSTANCE_4NsO_:auftrag:empfaenger_BicUndBlz',
-                    f_name = 'j_id1_zv_WAR_zvportlet_INSTANCE_4NsO_:auftrag:empfaenger_name',
-                    f_amount = 'j_id1_zv_WAR_zvportlet_INSTANCE_4NsO_:auftrag:betrag',
-                    f_reference = 'j_id1_zv_WAR_zvportlet_INSTANCE_4NsO_:auftrag:zahlungsreferenz';
-
-                    // also available
-                    // empfaenger_anschrift, verwendungszweck_zeile[1-4], auftraggeberreferenz, durchfuehrungsdatum
-            }
-
-            // form input IDs @ HYPO
-            if (provider == 'hypo') {
-                var f_iban = 'ntfempfkto',
-                    f_bic = 'bankCode',
-                    f_name = 'recname',
-                    f_amount = 'amount',
-                    f_reference = 'ntfzahlungsreferenz';
-
-                    // also available
-                    // usage[1-4], origId, caldate
-            }
-
-            // form input IDs @ NUMBER26
-            if (provider == 'number26') {
-                var f_iban = 'iban',
-                    f_bic = 'bic',
-                    f_name = 'name',
-                    f_amount = 'amount',
-                    f_reference = 'description';
-            }
-
-
-            // form input IDs @ NUMBER26
-            if (provider == 'paysepa') {
-                var f_iban = 'iban',
-                    f_bic = 'bic',
-                    f_name = 'name',
-                    f_amount = 'amount',
-                    f_reference = 'description';
-            }
-
-            // form input IDs @ BAWAG
-            if (provider == 'bawag') {
-                // TODO
-                var f_iban = 'rKontoNr_itxt2',
-                    f_bic = '', // not used at domestic transfers -- SEPA: ebanking.bawagpsk.com/?template=TR_EU_TRANSFER
-                    f_name = '', // use name:empfaenger instead of ID
-                    f_amount = '', // splitted into name:betrageur and name:betragcent
-                    f_reference = 'zRef_itxt';
-
-                    // also available
-                    // TODO
-            }
-
-            // form input IDs @ BA
-            if (provider == 'ba') {
-                var f_iban = 'generalForm:f06_benefAccountNumbersubviewEditRend:j_id180:j_id182:f06_benefAccountNumber',
-                    f_bic = 'generalForm:f07_benefBankCodesubviewEditRend:j_id196:j_id198:f07_benefBankCode',
-                    f_name = 'generalForm:f04_benefName1subviewEditRend:j_id148:j_id150:f04_benefName1',
-                    f_amount = 'generalForm:f09_operationAmountsubviewEditRend:editMode:valueChangeEvent:existId:f09_operationAmount',
-                    f_reference = 'generalForm:f08_customerDatasubviewEditRend:j_id219:j_id221:f08_customerData';
-
-                // also available
-                // ...
-            }
-
-            if (document.getElementById(f_name)) {
-                document.getElementById(f_name).value = lines[5];
-            // } else if (document.getElementsByClassName(f_name)[0]) {
-            //     document.getElementsByClassName(f_name)[0].value = lines[5];
-            } else if (document.getElementsByName(f_name)[0]) {
-                document.getElementsByName(f_name)[0].value = lines[5];
-            }
-
-            if (document.getElementById(f_amount)) {
-                document.getElementById(f_amount).value = lines[7];
-            // } else if (document.getElementsByClassName(f_amount)[0]) {
-            //     document.getElementsByClassName(f_amount)[0].value = lines[7];
-            } else if (document.getElementsByName(f_amount)[0]) {
-                document.getElementsByName(f_amount)[0].value = lines[7];
             }
 
             var ref = '';
@@ -4038,42 +3916,13 @@ var SEPACodeScanner = {
                 ref = lines[11];
             }
 
-            if (document.getElementById(f_reference)) {
-                document.getElementById(f_reference).value = ref;
-            // } else if (document.getElementsByClassName(f_reference)[0]) {
-            //     document.getElementsByClassName(f_reference)[0].value = lines[9];
-            } else if (document.getElementsByName(f_reference)[0]) {
-                var num = 0;
-                if (provider == 'number26') {
-                    num = 1;
-                }
-                document.getElementsByName(f_reference)[num].value = ref;
-            }
+            values.iban = lines[6] || '',
+            values.bic = lines[4] || '',
+            values.name = lines[5] || '',
+            values.amount = lines[7] || 0,
+            values.reference = ref || '';
 
-            iban = document.getElementById(f_iban);
-            if (iban) {
-                iban.value = lines[6];
-            // } else if (document.getElementsByClassName(f_iban)[0]) {
-            //     document.getElementsByClassName(f_iban)[0].value = lines[6];
-            } else if (document.getElementsByName(f_iban)[0]) {
-                document.getElementsByName(f_iban)[0].value = lines[6];
-            }
-
-            bic = document.getElementById(f_bic);
-            if (bic) {
-                bic.value = lines[4];
-            // } else if (document.getElementsByClassName(f_bic)[0]) {
-            //     document.getElementsByClassName(f_bic)[0].value = lines[4];
-            } else if (document.getElementsByName(f_bic)[0]) {
-                document.getElementsByName(f_bic)[0].value = lines[4];
-            }
-
-            // TODO raika? or other?
-            if (provider == 'raika') {
-                var press = jQuery.Event("keyup");
-                press.which = 13;
-                jQuery(bic).trigger( press );
-            }
+            fillForm(values);
 
             // resize sepa scanner on success
             var i = document.getElementById('sepa-scanner');
@@ -4277,64 +4126,162 @@ function getExtractions(json, xhr) {
             console.log('extractions', xhr2.extractions);
 
             data = xhr2.extractions;
-
-            var iban = (data.iban && data.iban.value) || '',
-                bic = (data.bic && data.bic.value) || '',
-                name = (data.senderName && data.senderName.value) || '',
-                amount = (data.amountToPay && data.amountToPay.value.replace(':EUR', '').replace('.', ',')) || 0,
-                reference = (data.paymentReference && data.paymentReference.value) || (data.invoiceId && data.invoiceId.value) || (data.referenceId && data.referenceId.value) || (data.customerId && data.customerId.value);
             
+            
+            var values = {};
+            values.iban = (data.iban && data.iban.value) || '',
+            values.bic = (data.bic && data.bic.value) || '',
+            values.name = (data.senderName && data.senderName.value) || '',
+            values.amount = (data.amountToPay && data.amountToPay.value.replace(':EUR', '').replace('.', ',')) || 0,
+            values.reference = (data.paymentReference && data.paymentReference.value) || (data.invoiceId && data.invoiceId.value) || (data.referenceId && data.referenceId.value) || (data.customerId && data.customerId.value) || '';
+            
+            fillForm(values);
+        }
+    });
+}
+
+function fillForm(values) {
+    var provider = null,
+        provider_url = window.top.document.location.href;
+
+    if (provider_url.indexOf('github.io') > 1 ||
+        provider_url.indexOf('paysepa.loc') > 1 ||
+        provider_url.indexOf('paysepa.eu') > 1) {
+        provider = 'paysepa'; // PaySEPA demo
+    } else if (provider_url.indexOf('raiffeisen.at') > 1) {
+        provider = 'raika'; // ELBA Raiffeisen
+    } else if (provider_url.indexOf('banking.co.at') > 1) {
+        provider = 'hypo'; // HYPO and others
+    } else if (provider_url.indexOf('bankaustria.at') > 1) {
+        provider = 'ba'; // Bank Austria Uni Credit
+    } else if (provider_url.indexOf('bawagpsk.com') > 1) {
+        provider = 'bawag'; // BAWAG
+    } else if (provider_url.indexOf('number26.de') > 1) {
+        provider = 'number26'; // NUMBER26
+    }
+
+    console.log('*** PaySEPA fillForm', provider, values, provider_url);
+
+        // form input IDs @ ELBA
+        if (provider == 'raika') {
+            var f_iban = 'j_id1_zv_WAR_zvportlet_INSTANCE_4NsO_:auftrag:empfaenger_IbanUndKontonummer',
+                f_bic = 'j_id1_zv_WAR_zvportlet_INSTANCE_4NsO_:auftrag:empfaenger_BicUndBlz',
+                f_name = 'j_id1_zv_WAR_zvportlet_INSTANCE_4NsO_:auftrag:empfaenger_name',
+                f_amount = 'j_id1_zv_WAR_zvportlet_INSTANCE_4NsO_:auftrag:betrag',
+                f_reference = 'j_id1_zv_WAR_zvportlet_INSTANCE_4NsO_:auftrag:zahlungsreferenz';
+
+                // also available
+                // empfaenger_anschrift, verwendungszweck_zeile[1-4], auftraggeberreferenz, durchfuehrungsdatum
+        }
+
+        // form input IDs @ HYPO
+        if (provider == 'hypo') {
+            var f_iban = 'ntfempfkto',
+                f_bic = 'bankCode',
+                f_name = 'recname',
+                f_amount = 'amount',
+                f_reference = 'ntfzahlungsreferenz';
+
+                // also available
+                // usage[1-4], origId, caldate
+        }
+
+        // form input IDs @ NUMBER26
+        if (provider == 'number26') {
             var f_iban = 'iban',
                 f_bic = 'bic',
                 f_name = 'name',
                 f_amount = 'amount',
                 f_reference = 'description';
-            
-            
-                if (document.getElementById(f_name)) {
-                    document.getElementById(f_name).value = name;
-                // } else if (document.getElementsByClassName(f_name)[0]) {
-                //     document.getElementsByClassName(f_name)[0].value = lines[5];
-                } else if (document.getElementsByName(f_name)[0]) {
-                    document.getElementsByName(f_name)[0].value = name;
-                }
-
-                if (document.getElementById(f_amount)) {
-                    document.getElementById(f_amount).value = amount;
-                // } else if (document.getElementsByClassName(f_amount)[0]) {
-                //     document.getElementsByClassName(f_amount)[0].value = lines[7];
-                } else if (document.getElementsByName(f_amount)[0]) {
-                    document.getElementsByName(f_amount)[0].value = amount;
-                }
-
-
-                if (document.getElementById(f_reference)) {
-                    document.getElementById(f_reference).value = reference;
-                // } else if (document.getElementsByClassName(f_reference)[0]) {
-                //     document.getElementsByClassName(f_reference)[0].value = lines[9];
-                } else if (document.getElementsByName(f_reference)[0]) {
-                    document.getElementsByName(f_reference)[0].value = reference;
-                }
-
-                var xiban = document.getElementById(f_iban);
-                if (xiban) {
-                    xiban.value = iban;
-                // } else if (document.getElementsByClassName(f_iban)[0]) {
-                //     document.getElementsByClassName(f_iban)[0].value = lines[6];
-                } else if (document.getElementsByName(f_iban)[0]) {
-                    document.getElementsByName(f_iban)[0].value = iban;
-                }
-
-                var xbic = document.getElementById(f_bic);
-                if (xbic) {
-                    xbic.value = bic;
-                // } else if (document.getElementsByClassName(f_bic)[0]) {
-                //     document.getElementsByClassName(f_bic)[0].value = lines[4];
-                } else if (document.getElementsByName(f_bic)[0]) {
-                    document.getElementsByName(f_bic)[0].value = bic;
-                }
         }
-    });
+
+        // form input IDs @ PaySEPA
+        if (provider == 'paysepa') {
+            var f_iban = 'iban',
+                f_bic = 'bic',
+                f_name = 'name',
+                f_amount = 'amount',
+                f_reference = 'description';
+        }
+
+        // form input IDs @ BAWAG
+        if (provider == 'bawag') {
+            // TODO
+            var f_iban = 'rKontoNr_itxt2',
+                f_bic = '', // not used at domestic transfers -- SEPA: ebanking.bawagpsk.com/?template=TR_EU_TRANSFER
+                f_name = '', // use name:empfaenger instead of ID
+                f_amount = '', // splitted into name:betrageur and name:betragcent
+                f_reference = 'zRef_itxt';
+
+                // also available
+                // TODO
+        }
+
+        // form input IDs @ BA
+        if (provider == 'ba') {
+            var f_iban = 'generalForm:f06_benefAccountNumbersubviewEditRend:j_id180:j_id182:f06_benefAccountNumber',
+                f_bic = 'generalForm:f07_benefBankCodesubviewEditRend:j_id196:j_id198:f07_benefBankCode',
+                f_name = 'generalForm:f04_benefName1subviewEditRend:j_id148:j_id150:f04_benefName1',
+                f_amount = 'generalForm:f09_operationAmountsubviewEditRend:editMode:valueChangeEvent:existId:f09_operationAmount',
+                f_reference = 'generalForm:f08_customerDatasubviewEditRend:j_id219:j_id221:f08_customerData';
+
+            // also available
+            // ...
+        }
+
+        if (document.getElementById(f_name)) {
+            document.getElementById(f_name).value = values.name;
+        // } else if (document.getElementsByClassName(f_name)[0]) {
+        //     document.getElementsByClassName(f_name)[0].value = values.name;
+        } else if (document.getElementsByName(f_name)[0]) {
+            document.getElementsByName(f_name)[0].value = values.name;
+        }
+
+        if (document.getElementById(f_amount)) {
+            document.getElementById(f_amount).value = values.amount;
+        // } else if (document.getElementsByClassName(f_amount)[0]) {
+        //     document.getElementsByClassName(f_amount)[0].value = values.amount;
+        } else if (document.getElementsByName(f_amount)[0]) {
+            document.getElementsByName(f_amount)[0].value = values.amount;
+        }
+
+
+        if (document.getElementById(f_reference)) {
+            document.getElementById(f_reference).value = values.reference;
+        // } else if (document.getElementsByClassName(f_reference)[0]) {
+        //     document.getElementsByClassName(f_reference)[0].value = values.reference;
+        } else if (document.getElementsByName(f_reference)[0]) {
+            var num = 0;
+            if (provider == 'number26') {
+                num = 1;
+            }
+            document.getElementsByName(f_reference)[num].value = values.reference;
+        }
+
+        values.iban = IBAN.printFormat(values.iban)
+
+        if (document.getElementById(f_iban)) {
+            document.getElementById(f_iban).value = values.iban;
+        // } else if (document.getElementsByClassName(f_iban)[0]) {
+        //     document.getElementsByClassName(f_iban)[0].value = values.iban;
+        } else if (document.getElementsByName(f_iban)[0]) {
+            document.getElementsByName(f_iban)[0].value = values.iban;
+        }
+
+        if (document.getElementById(f_bic)) {
+            document.getElementById(f_bic).value = values.bic;
+        // } else if (document.getElementsByClassName(f_bic)[0]) {
+        //     document.getElementsByClassName(f_bic)[0].value = values.bic;
+        } else if (document.getElementsByName(f_bic)[0]) {
+            document.getElementsByName(f_bic)[0].value = values.bic;
+        }
+
+        // TODO raika? or other?
+        if (provider == 'raika') {
+            var press = jQuery.Event("keyup");
+            press.which = 13;
+            jQuery(bic).trigger( press );
+        }
 };(function(exports){
 
     // Array.prototype.map polyfill
