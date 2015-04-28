@@ -300,11 +300,11 @@ function fillForm(values) {
 
         // form input IDs @ ELBA
         if (provider == 'raika') {
-            var f_iban = 'j_id1_zv_WAR_zvportlet_INSTANCE_4NsO_:auftrag:empfaenger_IbanUndKontonummer',
-                f_bic = 'j_id1_zv_WAR_zvportlet_INSTANCE_4NsO_:auftrag:empfaenger_BicUndBlz',
-                f_name = 'j_id1_zv_WAR_zvportlet_INSTANCE_4NsO_:auftrag:empfaenger_name',
-                f_amount = 'j_id1_zv_WAR_zvportlet_INSTANCE_4NsO_:auftrag:betrag',
-                f_reference = 'j_id1_zv_WAR_zvportlet_INSTANCE_4NsO_:auftrag:zahlungsreferenz';
+            var f_iban = 'j_id1_zv_WAR_zvportlet_INSTANCE_44Kx_:auftrag:empfaenger_IbanUndKontonummer',
+                f_bic = 'j_id1_zv_WAR_zvportlet_INSTANCE_44Kx_:auftrag:empfaenger_BicUndBlz',
+                f_name = 'j_id1_zv_WAR_zvportlet_INSTANCE_44Kx_:auftrag:empfaenger_name',
+                f_amount = 'j_id1_zv_WAR_zvportlet_INSTANCE_44Kx_:auftrag:betrag',
+                f_reference = 'j_id1_zv_WAR_zvportlet_INSTANCE_44Kx_:auftrag:zahlungsreferenz';
 
                 // also available
                 // empfaenger_anschrift, verwendungszweck_zeile[1-4], auftraggeberreferenz, durchfuehrungsdatum
