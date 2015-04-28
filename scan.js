@@ -17,7 +17,7 @@ function scanSEPAcode() {
         url = 'https://paysepa.github.io/transfer';
 
     } else if (provider_url.indexOf('raiffeisen.at') > 1) {
-        el = document.getElementById('j_id1_zv_WAR_zvportlet_INSTANCE_4NsO_:j_id4');
+        el = document.getElementById('j_id1_zv_WAR_zvportlet_INSTANCE_44Kx_:j_id4');
         supported = true;
         provider = 'raika'; // ELBA Raiffeisen
         url = 'https://portal.raiffeisen.at/resolveLink?serviceName=izv';
