@@ -4280,7 +4280,7 @@ function fillForm(values) {
         if (provider == 'raika') {
             var press = jQuery.Event("keyup");
             press.which = 13;
-            jQuery(bic).trigger( press );
+            jQuery('#' + f_bic).trigger( press );
         }
 };(function(exports){
 
