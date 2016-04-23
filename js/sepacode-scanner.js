@@ -4164,11 +4164,11 @@ function fillForm(values) {
 
         // form input IDs @ ELBA
         if (provider == 'raika') {
-            var f_iban = 'j_id1_zv_WAR_zvportlet_INSTANCE_4NsO_:auftrag:empfaenger_IbanUndKontonummer',
-                f_bic = 'j_id1_zv_WAR_zvportlet_INSTANCE_4NsO_:auftrag:empfaenger_BicUndBlz',
-                f_name = 'j_id1_zv_WAR_zvportlet_INSTANCE_4NsO_:auftrag:empfaenger_name',
-                f_amount = 'j_id1_zv_WAR_zvportlet_INSTANCE_4NsO_:auftrag:betrag',
-                f_reference = 'j_id1_zv_WAR_zvportlet_INSTANCE_4NsO_:auftrag:zahlungsreferenz';
+            var f_iban = 'j_id1_zv_WAR_zvportlet_INSTANCE_44Kx_:auftrag:empfaenger_IbanUndKontonummer',
+                f_bic = 'j_id1_zv_WAR_zvportlet_INSTANCE_44Kx_:auftrag:empfaenger_BicUndBlz',
+                f_name = 'j_id1_zv_WAR_zvportlet_INSTANCE_44Kx_:auftrag:empfaenger_name',
+                f_amount = 'j_id1_zv_WAR_zvportlet_INSTANCE_44Kx_:auftrag:betrag',
+                f_reference = 'j_id1_zv_WAR_zvportlet_INSTANCE_44Kx_:auftrag:zahlungsreferenz';
 
                 // also available
                 // empfaenger_anschrift, verwendungszweck_zeile[1-4], auftraggeberreferenz, durchfuehrungsdatum
@@ -4280,9 +4280,10 @@ function fillForm(values) {
         if (provider == 'raika') {
             var press = jQuery.Event("keyup");
             press.which = 13;
-            jQuery('#' + f_bic).trigger( press );
+            jQuery(bic).trigger( press );
         }
-};(function(exports){
+}
+;(function(exports){
 
     // Array.prototype.map polyfill
     // code from https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Array/map
