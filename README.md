@@ -4,7 +4,7 @@ SEPA.co tools
 tools to for smart SEPA payment -- bookmarklet for drag & drop payment of PDF invoices in an online banking app.
 
 
-https://SEPA.co
+https://SEPA.digital
 
 
 License
